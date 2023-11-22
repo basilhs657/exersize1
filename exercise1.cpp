@@ -1,4 +1,6 @@
 #include <iostream>
+#include<ostream>
+#include<istream>
 #include <string>
 // athliopt mono
 using namespace std;
@@ -19,10 +21,17 @@ private:
 	string second_name;//
 	string name	;//o
 	string AN; //arithmos astinomikhs taftot
+
+	static int person_counter;;//keeping track of object Persons created
 	
     /* data */
 public:
-    Person(long int x , string first_name , string last_name ,  string taftotita):AM(x),name(first_name),second_name(last_name) , AN(taftotita){}; //initializer list
+    Person(long int x , string first_name , string last_name ,  string taftotita):AM(x),name(first_name),second_name(last_name) , AN(taftotita){
+		person_counter++;
+	}; //initializer list
+	void Person_counter(){
+        cout << "The number of people created is: " << person_counter << endl;
+    }
 	void SetAM(long int arithmos){ //imutators
 		AM=arithmos;
 	} 
@@ -35,14 +44,23 @@ public:
 	void SetAN(string taftotita){
 			AN=taftotita;
 	}
+	friend ostream& operator<<(ostream& par  ,const Person& pr) {
+		par << "Name: " << pr.name << endl << "Last Name: "<< pr.second_name << endl << "Arithmo mitro: " << pr.AM << endl << "Arithmo tautothtas: " << pr.AN << endl; 
+		return par;
+	}
+	friend istream& operator>>(istream& ins , const Person det){
+		//
+	}
+
+
 	long int GetAM(){return AM;};
 	string GetFirstName(){return name;};
 	string GetLastName(){return second_name;};
 	string GetAN(){return AN;};
-    ~Person();
+    // ~Person(); destructor
 };
 
-
+int Person::person_counter = 0;
 
 class Secretary
 {
@@ -63,5 +81,9 @@ Secretary::~Secretary()
 
 
 int main(){
-
+	Person p(11112233 , "bill" , "sikakis" , "albanian");
+	//test
+	cout << "name is: " << p.GetFirstName() << endl << "surname: " << p.GetLastName() << endl << "AM: " << p.GetAM() << endl;
+    p.Person_counter();
+    return 0;
 }
