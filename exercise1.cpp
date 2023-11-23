@@ -13,8 +13,8 @@ private:
 	string AN; //arithmos astinomikhs taftot
 
 	static int person_counter;;//keeping track of object Persons created
-	
     /* data */
+
 public:
     Person(long int x , string first_name , string last_name ,  string taftotita):AM(x),name(first_name),second_name(last_name) , AN(taftotita){
 		cout << "Person has been constructed" << endl;
@@ -41,8 +41,15 @@ public:
 		return par;
 	}
 	friend istream & operator>>(istream& ins ,/*const not needed i think cause we change value of the pobject */ Person& det){
-		 ins  >> det.name>> det.second_name >> det.AM >> det.AN ; 
-		 return ins;
+		cout << "give Name" << endl;
+		ins  >> det.name;
+		cout << "give last Name:" << endl;
+		ins  >>  det.second_name; 
+		cout << "give Am" << endl;
+		ins >> det.AM;
+		cout << "give AN" << endl;
+		ins >> det.AN;
+		return ins;
 		//
 	}
 
@@ -74,7 +81,6 @@ int Person::person_counter = 0;
 // {
 // }
 
-
 int main(){
 	Person p(11112233 , "bill" , "sikakis" , "albanian");
 	//test
@@ -83,7 +89,8 @@ int main(){
 	
 //use of operation overload functions  (istream and ostream)
 	Person p1 ;
-	cin >>p1; 
+	
+	cin >> p1; 
 	cout << p1;
     return 0;
 }
