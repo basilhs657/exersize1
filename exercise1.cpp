@@ -4,16 +4,6 @@
 #include <string>
 // athliopt mono
 using namespace std;
-//class Student{
-//	long int Am; //arithmos mitrwou
-//	string email;
-//	string An ; // arithmos astinomikhw taftothtas 
-//	string name ; 
-//	string second_name ; 
-//	public:
-//		Student(long int arithmos_mitrow , string mail , string taftotita )Am(arithmos_mitrow),{}
-//};
-//this
 class Person
 {
 private:
@@ -29,6 +19,7 @@ public:
     Person(long int x , string first_name , string last_name ,  string taftotita):AM(x),name(first_name),second_name(last_name) , AN(taftotita){
 		person_counter++;
 	}; //initializer list
+	Person(){}; //the constructor in to use the istream and ostream function 
 	void Person_counter(){
         cout << "The number of people created is: " << person_counter << endl;
     }
@@ -44,11 +35,13 @@ public:
 	void SetAN(string taftotita){
 			AN=taftotita;
 	}
-	friend ostream& operator<<(ostream& par  ,const Person& pr) {
+	friend ostream & operator<<(ostream& par  ,const Person& pr) {
 		par << "Name: " << pr.name << endl << "Last Name: "<< pr.second_name << endl << "Arithmo mitro: " << pr.AM << endl << "Arithmo tautothtas: " << pr.AN << endl; 
 		return par;
 	}
-	friend istream& operator>>(istream& ins , const Person det){
+	friend istream & operator>>(istream& ins ,/*const not needed i think cause we change value of the pobject */ Person& det){
+		 ins  >> det.name>> det.second_name >> det.AM >> det.AN ; 
+		 return ins;
 		//
 	}
 
@@ -85,5 +78,10 @@ int main(){
 	//test
 	cout << "name is: " << p.GetFirstName() << endl << "surname: " << p.GetLastName() << endl << "AM: " << p.GetAM() << endl;
     p.Person_counter();
+	
+//use of operation overload functions  (istream and ostream)
+	Person p1 ;
+	cin >>p1; 
+	cout << p1;
     return 0;
 }
