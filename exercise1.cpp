@@ -17,6 +17,7 @@ private:
     /* data */
 public:
     Person(long int x , string first_name , string last_name ,  string taftotita):AM(x),name(first_name),second_name(last_name) , AN(taftotita){
+		cout << "Person has been constructed" << endl;
 		person_counter++;
 	}; //initializer list
 	Person(){}; //the constructor in to use the istream and ostream function 
@@ -45,32 +46,33 @@ public:
 		//
 	}
 
-
 	long int GetAM(){return AM;};
 	string GetFirstName(){return name;};
 	string GetLastName(){return second_name;};
 	string GetAN(){return AN;};
-    // ~Person(); destructor
+	~Person(){
+		cout << "Person has been destructed" << endl;
+	}
 };
 
 int Person::person_counter = 0;
 
-class Secretary
-{
-private:
-    /* data */
-public:
-    Secretary(/* args */);
-    ~Secretary();
-};
+// class Secretary
+// {
+// private:
+//     /* data */
+// public:
+//     Secretary(/* args */);
+//     ~Secretary();
+// };
 
-Secretary::Secretary(/* args */)
-{
-}
+// Secretary::Secretary(/* args */)
+// {
+// }
 
-Secretary::~Secretary()
-{
-}
+// Secretary::~Secretary()
+// {
+// }
 
 
 int main(){
