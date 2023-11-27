@@ -73,17 +73,18 @@ private:
 	map<long int, Person *> person_map ; // we gonna use map key:AM(aritmos mitrwou) value:person object
 public:
 	Secretary(){}; //empty constructor
-	Secretary& operator+(Person * other){
-		Person * pr = new Person(*other) ;  // dynamic allocation 
-		person_map[pr->GetAM()]=pr ; //add the person to the map 
+	Secretary& operator+(Person other){
+		cout << "this is the AM: " << other.GetAM() << endl;
+		Person * pr = new Person(other);  // dynamic allocation 
+		person_map[pr->GetAM()]= pr; //add the person to the map
+		cout << "this is the new" << person_map[pr->GetAM()]->GetAM() << endl;
 		return *this ;//return the objects pointer
 	}
 	friend istream & operator>>(istream & input ,Secretary& sec){
 		Person person ; 
 		cin >> person ;
-		Person  *pointer_person = new Person(person) ;
+		Person  pointer_person = person;
 		sec=sec+pointer_person; //using the + operatot with the function above 
-		delete pointer_person;
 		return input;
 	}
 	friend ostream& operator<<(ostream& output,Secretary& sec){
@@ -96,16 +97,18 @@ public:
 	}
 
 	Secretary& operator=(const Secretary& sec){
-		
-		for(auto mp = person_map.begin(); mp != person_map.end(); mp++){
-			delete mp->second;
-		}
-		person_map.clear();
-		for(auto mp = sec.person_map.begin(); mp != sec.person_map.end(); mp++){
+		if(this != &sec){
+			for(auto mp = person_map.begin(); mp != person_map.end(); mp++){
+				delete mp->second;
+			}
+			person_map.clear();
+			for(auto mp = sec.person_map.begin(); mp != sec.person_map.end(); mp++){
+				Person* cloned = new Person(*(mp->second)); 
 
-			Person* cloned = new Person(*(mp->second)); 
-			person_map[mp->first] = cloned;
-		}
+				cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!person map: " << cloned->GetAM();
+				person_map[mp->first] = cloned;
+			}
+		}	
 		return *this;
 	}
 
@@ -117,8 +120,11 @@ public:
 	}; // copy constructor 
 
 	void ExistingAM(Person * person ){
-		if(person_map[person->GetAM()]==NULL) //the value of the map is a pointer 
+		if(person_map[person->GetAM()]==NULL){ //the value of the map is a pointer 
+			cout << person->GetAM() << endl;
+			cout << person_map[person->GetAM()] << endl;
 			cout<<" PERSON DOES NOT EXIST"<< endl;
+		}
 		else
 		{
 			cout << "PERSON EXISTS" << endl;
@@ -128,8 +134,9 @@ public:
 	}
 	~Secretary(){
 		for(auto pr = person_map.begin(); pr != person_map.end(); pr++){
-			delete pr->second;
+		  	delete pr->second;
 		}
+	
 		person_map.clear();
 		cout << "secretary has been destructed" << endl;
 	}
@@ -148,9 +155,9 @@ int main(){
 	cin >> secretary;
 	cin >> secretary;
 	Person find;
-	cin >> find;
-	Secretary replace;
-	replace = secretary;
-	replace.ExistingAM(&find);
-	p.Person_counter();
+ 	cin >> find;
+ 	Secretary replace;
+ 	replace = secretary;
+ 	secretary.ExistingAM(&find);
+ 	p.Person_counter();
 }
