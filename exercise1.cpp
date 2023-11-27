@@ -9,7 +9,6 @@ using namespace std;
 
 class Person
 {
-
 private:
 	long int AM; //arithmos mitrwoy
 	string second_name;//
@@ -132,7 +131,7 @@ public:
 			delete pr->second;
 		}
 		person_map.clear();
-		cout << "sec has been destructed" << endl;
+		cout << "secretary has been destructed" << endl;
 	}
 };
 
@@ -151,8 +150,7 @@ int main(){
 	Person find;
 	cin >> find;
 	Secretary replace;
+	replace = secretary;
+	replace.ExistingAM(&find);
 	p.Person_counter();
-	
-
-
 }
