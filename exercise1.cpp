@@ -71,23 +71,23 @@ class Secretary
 {
 private:
 	map<long int, Person *> person_map ; // we gonna use map key:AM(aritmos mitrwou) value:person object
+	map<string , Person *> last_name_map;
 public:
 	Secretary(){}; //empty constructor
 	Secretary& operator+(Person other){
 		cout << "this is the AM: " << other.GetAM() << endl;
-		Person * pr = new Person(other);  // dynamic allocation 
-		person_map[pr->GetAM()]= pr; //add the person to the map
-		cout << "this is the new" << person_map[pr->GetAM()]->GetAM() << endl;
+		//Person * pr = new Person(&other);  // dynamic allocation 
+		person_map[other.GetAM()]= & other; //add the person to the map
+		cout << "this is the new" << person_map[other.GetAM()]->GetAM() << endl;
 		return *this ;//return the objects pointer
 	}
 	friend istream & operator>>(istream & input ,Secretary& sec){
 		Person person ; 
 		cin >> person ;
-		Person  pointer_person = person;
-		sec=sec+pointer_person; //using the + operatot with the function above 
+		sec=sec+person; //using the + operatot with the function above 
 		return input;
 	}
-	friend ostream& operator<<(ostream& output,Secretary& sec){
+	friend ostream& operator<<(ostream& output,const Secretary& sec){
 		cout << endl;
 		for(auto itr =sec.person_map.begin() ; itr != sec.person_map.end() ; itr++){
 			output << *itr->second;	 //using the Persons class << operartor
@@ -98,17 +98,21 @@ public:
 
 	Secretary& operator=(const Secretary& sec){
 		if(this != &sec){
-			for(auto mp = person_map.begin(); mp != person_map.end(); mp++){
+				for(auto mp = person_map.begin(); mp != person_map.end(); mp++){
+
 				delete mp->second;
 			}
 			person_map.clear();
+
 			for(auto mp = sec.person_map.begin(); mp != sec.person_map.end(); mp++){
 				Person* cloned = new Person(*(mp->second)); 
 
 				cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!person map: " << cloned->GetAM();
 				person_map[mp->first] = cloned;
-			}
-		}	
+			delete cloned ;
+
+			}			
+					}	
 		return *this;
 	}
 
@@ -137,7 +141,7 @@ public:
 		  	delete pr->second;
 		}
 	
-		person_map.clear();
+	person_map.clear();
 		cout << "secretary has been destructed" << endl;
 	}
 };
