@@ -72,18 +72,17 @@ class Secretary
 private:
 	map<long int, Person *> person_map ; // we gonna use map key:AM(aritmos mitrwou) value:person object
 	map<string , Person *> last_name_map;
+
 public:
 	Secretary(){}; //empty constructor
-	Secretary& operator+(Person other){
-		cout << "this is the AM: " << other.GetAM() << endl;
-		//Person * pr = new Person(&other);  // dynamic allocation 
-		person_map[other.GetAM()]= & other; //add the person to the map
-		cout << "this is the new" << person_map[other.GetAM()]->GetAM() << endl;
+	Secretary& operator+( Person& person){
+		Person * pr = new Person(person);  // dynamic allocation 
+		person_map[pr->GetAM()]=  pr; //add the person to the map	
 		return *this ;//return the objects pointer
 	}
 	friend istream & operator>>(istream & input ,Secretary& sec){
 		Person person ; 
-		cin >> person ;
+		input >> person ;
 		sec=sec+person; //using the + operatot with the function above 
 		return input;
 	}
@@ -109,7 +108,6 @@ public:
 
 				cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!person map: " << cloned->GetAM();
 				person_map[mp->first] = cloned;
-			delete cloned ;
 
 			}			
 					}	
@@ -133,13 +131,14 @@ public:
 		{
 			cout << "PERSON EXISTS" << endl;
 			cout << *person; 
-		}	
-	
+		}		
 	}
 	~Secretary(){
 		for(auto pr = person_map.begin(); pr != person_map.end(); pr++){
 		  	delete pr->second;
 		}
+		auto pr =person_map.end();
+		delete pr->second;
 	
 	person_map.clear();
 		cout << "secretary has been destructed" << endl;
