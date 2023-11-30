@@ -13,25 +13,28 @@ private:
 	//PERSON Data
 	string first_name; // first_name
 	string last_name;//last name
-	long int AM; //ΑΡΙΘΜΟΣ ΜΗΤΡΟΟ
+	// long int AM; //ΑΡΙΘΜΟΣ ΜΗΤΡΟΟ
 	int age; // age of person
 	string doc_number; //arithmos astinomikhs taftotitas
+	string email; // email
 
 	static int person_counter;;//keeping track of object Persons created
 
 public:
-    Person(string first_name , string last_name , int age , string AN , string doc_number):first_name(first_name),last_name(last_name), age(age) , AM(AM), doc_number(doc_number){
-		cout << "Person has been constructed" << endl;
+    Person(string first_name , string last_name , int age  , string doc_number , string email):first_name(first_name),last_name(last_name), age(age) , doc_number(doc_number) , email(email){
+	//cout << "Person has been constructed" << endl;
 		person_counter++;
 	}; //initializer list
-	
 	Person(){}; //the constructor in to use the istream and ostream function 
+
 	void Person_counter(){
-        cout << "The number of people created is: " << person_counter << endl;
+        cout << "The number of people created is: " << person_counter << endl; //PRINTING THE AMOUNT OF PERSONS CREATED
     }
-	void SetAM(long int arithmos){ //imutators
-		AM=arithmos;					
-	} 			
+
+	//SETTERS
+	// void SetAM(long int arithmos){ //imutators
+	// 	AM=arithmos;					
+	// } 			
 	void SetAge(int age){
 		age = age;
 	}
@@ -41,11 +44,14 @@ public:
 	void SetSecondName(string last_name){
 		last_name=last_name;
 	}
-	void SetAN(string doc_number){
+	void SetDoc_Num(string doc_number){
 		doc_number=doc_number;
 	}
+	void SetEmail(string email){
+		email = email;
+	}
 	friend ostream & operator<<(ostream& par  ,const Person& pr) {
-		par << "First Name: " << pr.first_name << endl << "Last Name: "<< pr.last_name << endl << "Age: " <<  pr.age << endl << "Arithmo mitro: " << pr.AM << endl << "Arithmo tautothtas: " << pr.doc_number << endl; 
+		par << "First Name: " << pr.first_name << endl << "Last Name: "<< pr.last_name << endl << "Age: " <<  pr.age << endl << "email: " << pr.email << endl << "Arithmo tautothtas: " << pr.doc_number << endl; 
 		return par;
 	}
 	friend istream & operator>>(istream& ins , Person& det){
@@ -57,21 +63,24 @@ public:
 		ins  >>  det.last_name; 
 		cout << "Age: ";
 		ins >> det.age;
-		cout << "University identification number (should contain an 11 digit number):";
-		ins >> det.AM;
+		cout << "email: ";
+		ins >> det.email;
 		cout << "Document number: ";
 		ins >> det.doc_number;
+		cout << endl;
 		return ins;
 	}
 
-	long int GetAM(){return AM;};
+	//MUTATORS
+	// long int GetAM(){return AM;};
 	string GetFirstName(){return first_name;};
 	string GetLastName(){return last_name;};
 	int getAge(){return age;};
-	string GetAN(){return doc_number;};
+	string GetDocNumber(){return doc_number;};
+	string GetEmail(){return email;};
 
 	~Person(){
-		cout << "Person has been destructed" << endl;
+		// cout << "Person has been destructed" << endl;
 	}
 };
 
@@ -80,27 +89,28 @@ public:
 class Secretary
 {
 private:
-	map<long int, Person *> person_map ; // we gonna use map key:AM(aritmos mitrwou) value:person object
-	// map<string , Person *> last_name_map;
+	map<string, Person *> person_map ; // we gonna use map key:document Number value:person object
+	map<string , Person *> extended_identificator; // finding a person with his first name and last name 
 
 public:
 	Secretary(){}; //empty constructor
 	Secretary& operator+(Person& person){
-			auto it = person_map.find(person.GetAM());
-			if (it == person_map.end()) {
-			Person* pr = new Person(person); // Dynamic allocation for new Person object
-			person_map[pr->GetAM()] = pr;   // Add the person to the map
-			} else {
-			// Person already exists, update its information
-			*(it->second) = person;
-    		}
+			Person* pr = new Person(person); 
+			person_map[pr->GetDocNumber()] = pr;
+			string first_last_name_email  = pr->GetFirstName() + pr->GetLastName() + pr->GetEmail();  
+			extended_identificator[first_last_name_email] = pr;
 			return *this;
 	}
 	friend istream & operator>>(istream & input ,Secretary& sec){
 		Person person; 
 		input >> person;
-		sec=sec+person; //using the + operatot with the function above
-
+		auto per = sec.person_map.find(person.GetDocNumber());
+		if(per == sec.person_map.end()){
+		  	sec=sec+person; //using the + operatot with the function above
+		}
+	 	else{
+		  	cout << "Person already exists!" << endl;
+		}
 		return input;
 	}
 	friend ostream& operator<<(ostream& output,const Secretary& sec){
@@ -114,61 +124,88 @@ public:
 
 	Secretary& operator=(const Secretary& sec){
 		if (this != &sec){
-			for (const auto& person : person_map) {
-				delete person.second;
-    		}
+			for(auto mp = person_map.begin(); mp != person_map.end(); mp++){
+				delete mp->second;
+			}			
 			for(auto mp = sec.person_map.begin(); mp != sec.person_map.end(); mp++){
-			Person* cloned = new Person(*(mp->second)); 
-			person_map[mp->first] = cloned;
+				Person* cloned = new Person(*(mp->second)); 
+				person_map[mp->first] = cloned;
+				string data = cloned->GetFirstName() + cloned->GetLastName() + cloned->GetEmail();
+				extended_identificator[data] = cloned;
 			}			
 		}
 		return *this;
 	}
 
 	Secretary(const Secretary& other):person_map(other.person_map){
-	 	for (const auto& person : other.person_map) {
-         Person* cloned = new Person(*(person.second));
-         person_map[person.first] = cloned;
+	 	for (auto person = other.person_map.begin(); person != other.person_map.end(); person++){
+    		Person* clone = new Person(*(person->second));
+        	person_map[person->first] = clone;
      	}
 	}; // copy constructor 
 
-	void ExistingAM(Person * person ){
-		if(person_map[person->GetAM()]==NULL){ //the value of the map is a pointer 
-			cout << person->GetAM() << endl;
-			cout << person_map[person->GetAM()] << endl;
+	void NumberOfPersons(const Secretary& other){
+		other.person_map.begin()->second->Person_counter();
+	}
+
+	void ExistingAM(Person * person){
+		if(person_map[person->GetDocNumber()]==NULL){ //the value of the map is a pointer 
 			cout<<" PERSON DOES NOT EXIST"<< endl;
 		}
 		else
 		{
 			cout << "PERSON EXISTS" << endl;
-			cout << *person; 
+			cout << *person <<endl << endl; 
 		}		
 	}
-	~Secretary(){
-		for (auto& person : person_map) {
-        	delete person.second;
-    	}
-    	person_map.clear();
-		cout << "secretary has been destructed" << endl;
+	void findUsingData(){
+		string name , last_name , email; 
+		cout << "name of the person you are searcing: " << endl;
+		cin >> name; 
+		cout << "last name of the person you are seaching: " << endl;
+		cin >> last_name; 
+		cout <<"email of the person you are seacring: "<< endl;
+		cin >> email;
+		string data = name + last_name + email;
+		if(extended_identificator[data] == NULL){
+			cout << "Person does not exist!" << endl;
+		}
+		else{
+			cout << "PERSON EXISTS : ";
+			cout << *extended_identificator[data] << endl;  
+		}
 	}
+	~Secretary(){
+		for(auto mp = person_map.begin(); mp != person_map.end(); mp++){
+			delete mp->second;
+		}			
+    	person_map.clear();
+		extended_identificator.clear();
+		cout << "Secretary has been destructed" << endl << endl;
+	}
+
+
 };
 
 int Person::person_counter = 0;
 
 
 int main(){
-	
+	//initializing a person 
 	Person p;
 	cin >> p;
+	//printing the number of persons created 
 	p.Person_counter();
 	Secretary secretary;
 	cin >> secretary;
 	cin >> secretary;
-	cin >> secretary;
+	secretary.findUsingData();
 	Person find;
  	cin >> find;
  	Secretary replace;
  	replace = secretary;
+	replace.findUsingData();
  	secretary.ExistingAM(&find);
  	p.Person_counter();
+	replace.NumberOfPersons(replace);
 }
