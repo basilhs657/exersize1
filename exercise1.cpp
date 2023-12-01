@@ -164,14 +164,20 @@ public:
 		other.person_map.begin()->second->Person_counter();
 	}
 	//creatin a function that will get as input another person and using it's document number it will find if the person exists in the document class
-	void ExistingAM(Person * person){
-		if(person_map.find(person->GetDocNumber()) == person_map.end()){ //if the find fucntion returned map.end then we didnt find the person  
+	void ExistingAM(){
+		string document;
+		cout << "Give the number of the document of the person you are trying to find: ";
+		cin >> document;
+		
+		if(person_map.find(document) == person_map.end()){ //if the find fucntion returned map.end then we didnt find the person  
 			cout<<" PERSON DOES NOT EXIST"<< endl;
 		}
 		else
 		{
+			
 			cout << "PERSON EXISTS" << endl;
-			cout << *person <<endl << endl; 
+			cout << "The data of the person you are looking for: " << endl;
+			cout <<*person_map[document] <<endl << endl; 
 		}		
 	}
 	//creating a function that will ask the user for the first and last name and email to find if the prson exists in our secretary class
@@ -191,7 +197,8 @@ public:
 			cout << "Person does not exist!" << endl;
 		}
 		else{
-			cout << "PERSON EXISTS : ";
+			cout << "PERSON EXISTS : " << endl;
+			cout << "The data of the person you are looking for: " << endl;
 			cout << *extended_identificator[data] << endl;  
 		}
 	}
@@ -229,7 +236,7 @@ int main(){
 	Person find;
  	cin >> find;
 	//checking if the person exists
-	secretary.ExistingAM(&find);
+	secretary.ExistingAM();
 	//initializing a second secretary
  	Secretary replace;
 	//inserting the previus secretary to replace to check the = operator overload and the copy constructor s
