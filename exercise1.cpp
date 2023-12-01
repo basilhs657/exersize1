@@ -77,7 +77,10 @@ public:
 	string GetDocNumber(){return doc_number;};
 	string GetEmail(){return email;};
 	// DESTRUCTOR
-	~Person(){}
+	~Person(){
+		//we reduce the number of person that exist 
+		person_counter--;
+	}
 };
 
 
@@ -247,7 +250,7 @@ int main(){
 	replace.findUsingData();
 	//we output the number of persons created
 	replace.NumberOfPersons(replace);
-	//we pring all the persons of secretary 
+	//we print all the persons of secretary 
 	cout << secretary;
 	//we print all the person of replace
 	cout << replace;
