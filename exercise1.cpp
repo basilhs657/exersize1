@@ -162,10 +162,6 @@ public:
      	}
 	}; // copy constructor 
 
-	//having access to all the different persons created 
-	void NumberOfPersons(const Secretary& other){
-		other.person_map.begin()->second->Person_counter();
-	}
 	//creatin a function that will get as input another person and using it's document number it will find if the person exists in the document class
 	void ExistingAM(){
 		string document;
@@ -248,8 +244,6 @@ int main(){
 	cin >> replace;
 	//we try to find if a person exists in replace
 	replace.findUsingData();
-	//we output the number of persons created
-	replace.NumberOfPersons(replace);
 	//we print all the persons of secretary 
 	cout << secretary;
 	//we print all the person of replace
