@@ -1,3 +1,9 @@
+
+// Τα μέλη της ομαδας ειναί:
+// Ντιέγκιτος Τζιμπράκου 1115202200185
+// Αντώνης Σφηκάκης 1115202200178
+
+
 #include <iostream>
 #include<ostream>
 #include<istream>
@@ -96,13 +102,13 @@ public:
 	//creating the + operator overload
 	Secretary& operator+(Person& person){
 		//allocating memory to store a person in our two maps
-		Person* pr = new Person(person); 
-		//inserting a new pair with the key document number and  it's pair the pr (person object)
-		person_map[pr->GetDocNumber()] = pr;
+		Person* per = new Person(person); 
+		//inserting a new pair with the key document number and  it's pair the per (person object)
+		person_map[per->GetDocNumber()] = per;
 		//creating the string that will represent the key for our other map to find the person 
-		string first_last_name_email  = pr->GetFirstName() + pr->GetLastName() + pr->GetEmail();
+		string first_last_name_email  = per->GetFirstName() + per->GetLastName() + per->GetEmail();
 		//we use the same person that we allocatd memory before   
-		extended_identificator[first_last_name_email] = pr;
+		extended_identificator[first_last_name_email] = per;
 		return *this;
 	}
 	//creating the >> operator overload
@@ -128,8 +134,8 @@ public:
 	friend ostream& operator<<(ostream& output,const Secretary& sec){
 		cout << endl;
 		//we traverse the whole person_map to print all the person in our secretry class
-		for(auto itr =sec.person_map.begin() ; itr != sec.person_map.end() ; itr++){
-			output << *itr->second;	 //using the Persons class << operartor overload function
+		for(auto person_traverse =sec.person_map.begin() ; person_traverse != sec.person_map.end() ; person_traverse++){
+			output << *person_traverse->second;	 //using the Persons class << operartor overload function
 			output << endl;
 		}
 		//we return the output
@@ -139,14 +145,14 @@ public:
 	Secretary& operator=(const Secretary& sec){
 		//we check if ..
 		if (this != &sec){
-			for(auto mp = person_map.begin(); mp != person_map.end(); mp++){
+			for(auto person_traverse = person_map.begin(); person_traverse != person_map.end(); person_traverse++){
 				//we delete the previus data
-				delete mp->second;
+				delete person_traverse->second;
 			}			
-			for(auto mp = sec.person_map.begin(); mp != sec.person_map.end(); mp++){
+			for(auto person_traverse = sec.person_map.begin(); person_traverse != sec.person_map.end(); person_traverse++){
 				//and we do a deep scan of the current data that we will clone to our assighned secretary 
-				Person* cloned = new Person(*(mp->second)); 
-				person_map[mp->first] = cloned;
+				Person* cloned = new Person(*(person_traverse->second)); 
+				person_map[person_traverse->first] = cloned;
 				string data = cloned->GetFirstName() + cloned->GetLastName() + cloned->GetEmail();
 				extended_identificator[data] = cloned;
 			}			
@@ -163,7 +169,7 @@ public:
 	}; // copy constructor 
 
 	//creatin a function that will get as input another person and using it's document number it will find if the person exists in the document class
-	void ExistingAM(){
+	void Find_with_doc_number(){
 		string document;
 		cout << "Give the number of the document of the person you are trying to find: ";
 		cin >> document;
@@ -173,7 +179,6 @@ public:
 		}
 		else
 		{
-			
 			cout << "PERSON EXISTS" << endl;
 			cout << "The data of the person you are looking for: " << endl;
 			cout <<*person_map[document] <<endl << endl; 
@@ -182,7 +187,7 @@ public:
 	//creating a function that will ask the user for the first and last name and email to find if the prson exists in our secretary class
 	void findUsingData(){
 		string name , last_name , email; 
-		cout << "Please pprovide the following information about the person you are searching: " << endl;
+		cout << "Please provide the following information about the person you are searching: " << endl;
 		cout << "name of the person you are searcing: " << endl;
 		cin >> name; 
 		cout << "last name of the person you are seaching: " << endl;
@@ -204,8 +209,8 @@ public:
 	//DESTRUCTORS 
 	~Secretary(){
 		//we delete all the dynamically allocated memory for the person objets we have created
-		for(auto mp = person_map.begin(); mp != person_map.end(); mp++){
-			delete mp->second;
+		for(auto person_traverse = person_map.begin(); person_traverse != person_map.end(); person_traverse++){
+			delete person_traverse->second;
 		}			
 		//since we used the same address for the object person in our person_map and extended_identificator map we don't have to delete the memory 
 		//for our extended_identificator map
@@ -217,6 +222,7 @@ public:
 
 
 };
+
 
 int Person::person_counter = 0;
 
@@ -231,11 +237,8 @@ int main(){
 	cin >> secretary;
 	//finfing a person using his fisrt name , last name and email
 	secretary.findUsingData();
-	//initializing a new person 
-	Person find;
- 	cin >> find;
 	//checking if the person exists
-	secretary.ExistingAM();
+	secretary.Find_with_doc_number();
 	//initializing a second secretary
  	Secretary replace;
 	//inserting the previus secretary to replace to check the = operator overload and the copy constructor s
@@ -247,7 +250,11 @@ int main(){
 	//we print all the persons of secretary 
 	cout << secretary;
 	//we print all the person of replace
+
 	cout << replace;
 
+	//creating a new person and checking if the person can be added to the secretery 
+	Person p("bill" , "t" , 12 , "123" , "213");
+	replace = replace + p;
 	return 0;
 }
