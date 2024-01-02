@@ -1,3 +1,9 @@
+
+#ifndef PERSON_H
+#define PERSON_H
+
+
+
 using namespace std;
 #include <iostream>
 #include <string>
@@ -20,17 +26,17 @@ class Person
 
         Person();
 
-        virtual void Person_counter();
+        void Person_counter();
 
-        virtual void SetAge(int age);
+        void SetAge(int age);
 
-        virtual void SetName(string first_name);
+        void SetName(string first_name);
 
-        virtual void SetSecondName(string last_name);
+        void SetSecondName(string last_name);
 
-        virtual void SetDoc_Num(string doc_number);
+        void SetDoc_Num(string doc_number);
 
-        virtual void SetEmail(string email);
+        void SetEmail(string email);
 
         friend ostream & operator<<(ostream& par  ,const Person& pr);
 
@@ -49,3 +55,4 @@ class Person
         ~Person();
 };
 
+#endif // PERSON_H

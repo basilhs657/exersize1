@@ -12,17 +12,21 @@
     }
 
 	//SETTERS
-	virtual void Person_counter() = 0;
-
-	virtual void SetAge(int age) = 0;
-
-	virtual void SetName(string first_name) = 0;
-
-	virtual void SetSecondName(string last_name) = 0;
-
-	virtual void SetDoc_Num(string doc_number) = 0;
-
-	virtual void SetEmail(string email) = 0;
+	void Person::SetAge(int age){
+		age = age; //setting the age
+	}
+	void Person::SetName(string first_name){	
+		first_name=first_name;	//setting the first Name
+	}					
+	void Person::SetSecondName(string last_name){
+		last_name=last_name;  //setting the last name
+	}
+	void Person::SetDoc_Num(string doc_number){
+		doc_number=doc_number;  //setting the document number
+	}
+	void Person::SetEmail(string email){
+		email = email;	//setting the email
+	}
 	//creating the << operator overload that will return the person data as an ostream 
 	ostream & operator<<(ostream& par  ,const Person& pr) {
 		par << "First Name: " << pr.first_name << endl << "Last Name: "<< pr.last_name << endl << "Age: " <<  pr.age << endl << "email: " << pr.email << endl << "Arithmo tautothtas: " << pr.doc_number << endl; 
@@ -57,4 +61,3 @@
 		//we reduce the number of person that exist 
 		person_counter--;
 	}
-
