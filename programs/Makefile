@@ -1,7 +1,7 @@
 LDFLAGS = -lm
 CFLAGS = -g -I.
 
-OBJS = main.o person.o secretary.o
+OBJS = main.o person.o secretary.o student.o
 
 EXEC = main
 
@@ -16,6 +16,9 @@ person.o: person.cpp person.h
 
 secretary.o: secretary.cpp secretary.h person.h 
 	g++ -c $(CFLAGS) secretary.cpp -o secretary.o
+
+student.o: student.cpp person.h 
+	g++ -c $(CFLAGS) student.cpp -o student.o
 
 all: $(EXEC)
 

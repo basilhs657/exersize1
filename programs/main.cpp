@@ -1,5 +1,6 @@
 #include "person.h"
 #include "secretary.h"
+#include "student.h"
 
 int main(){
 	//Checking the functionallity of secretary
