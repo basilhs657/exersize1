@@ -8,14 +8,6 @@ private:
     string AM;
     string course;
 public:
-    Student(string dateOfSighninh , string AM , string course): dateOfSighning(dateOfSighning) , AM(AM) , course(course);
-    ~Student: public Person();
+    Student(string dateOfSighninh , string AM , string course): dateOfSighning(dateOfSighning) , AM(AM) , course(course) {};
+    ~Student();
 };
-
-Student: public Person::Student: public Person(/* args */)
-{
-}
-
-Student: public Person::~Student: public Person()
-{
-}
