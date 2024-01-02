@@ -8,7 +8,7 @@ private:
     string AM;
     string course;
 public:
-    Student: public Person(string name , );
+    Student(string dateOfSighninh , string AM , string course): dateOfSighning(dateOfSighning) , AM(AM) , course(course);
     ~Student: public Person();
 };
 

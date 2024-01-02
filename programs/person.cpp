@@ -21,7 +21,7 @@
 	void Person::SetSecondName(string last_name){
 		last_name=last_name;  //setting the last name
 	}
-	void Person::SetDoc_Num(string doc_number){
+	virtual void Person::SetDoc_Num(string doc_number){
 		doc_number=doc_number;  //setting the document number
 	}
 	void Person::SetEmail(string email){

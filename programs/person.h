@@ -34,7 +34,7 @@ class Person
 
         void SetSecondName(string last_name);
 
-        void SetDoc_Num(string doc_number);
+        virtual void SetDoc_Num(string doc_number);
 
         void SetEmail(string email);
 
