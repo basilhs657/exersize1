@@ -13,19 +13,19 @@ class Secretary
     public:
         Secretary();
 
-        Secretary& operator+(Person& person);
+        // Secretary& operator+(Person& person);
 
-        friend istream & operator>>(istream & input ,Secretary& sec);
+        // friend istream & operator>>(istream & input ,Secretary& sec);
 
         friend ostream& operator<<(ostream& output,const Secretary& sec);
 
-        Secretary& operator=(const Secretary& sec);
+        // Secretary& operator=(const Secretary& sec);
 
         Secretary(const Secretary& other);
 
-        void Find_with_doc_number();
+        // void Find_with_doc_number();
 
-        void findUsingData();
+        // void findUsingData();
 
         ~Secretary();
 

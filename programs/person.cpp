@@ -21,8 +21,8 @@
 	void Person::SetSecondName(string last_name){
 		last_name=last_name;  //setting the last name
 	}
-	void Person::SetEmail(string email){
-		email = email;	//setting the email
+	void Person::SetDoc_Num(string doc_num){
+		doc_num = doc_num;	//setting the email
 	}
 	//creating the << operator overload that will return the person data as an ostream 
 	ostream & operator<<(ostream& par  ,const Person& pr) {

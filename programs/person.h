@@ -34,9 +34,9 @@ class Person
 
         void SetSecondName(string last_name);
 
-        virtual void SetDoc_Num(string doc_number) const = 0;
+        void SetDoc_Num(string doc_number);
 
-        void SetEmail(string email);
+        virtual void SetEmail(string email)const = 0;
 
         friend ostream & operator<<(ostream& par  ,const Person& pr);
 

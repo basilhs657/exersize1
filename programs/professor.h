@@ -4,7 +4,7 @@
 #include "person.h"
 
 
-class professor:public Person
+class Professor:public Person
 { 
 private:
     string lesson ; 
@@ -13,13 +13,13 @@ private:
     string email;
 
 public:
-    professor(string firstname , string lastname , int age  , string doc_number , string y , int office_number , int years_of_woking , string lesson );
-    professor();
+    Professor(string firstname , string lastname , int age  , string doc_number , string y , int office_number , int years_of_woking , string lesson );
+    Professor();
     void SetYearsOfWorking(int years_of_woking);
     void SetLesson(string lesson );
     void SetOfficeNumber(int office_number) ; 
-    void SetEmail();
-    ~professor();
+    void SetEmail(string email)const ;
+    virtual ~Professor();
 };
 
 #endif
