@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "course.h"
 
 Course:: Course(bool needed , string name , int points ): needed(needed), name(name ) , points(points){}; 
