@@ -14,4 +14,3 @@ void Professor::SetEmail(string email)const {
     email=my_email; 
 }
 Professor::~Professor(){};
- 
