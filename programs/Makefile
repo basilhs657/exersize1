@@ -1,7 +1,7 @@
 LDFLAGS = -lm
 CFLAGS = -g -I.
 
-OBJS = main.o person.o secretary.o student.o professor.o course.o
+OBJS = main.o person.o secretary.o student.o professor.o course.o semester.o
 
 EXEC = main
 
@@ -23,7 +23,8 @@ professor.o: professor.cpp professor.h
 	g++ -c $(CFLAGS) professor.cpp -o professor.o
 course.o: course.cpp course.h
 	g++ -c $(CFLAGS) course.cpp -o course.o
-
+semester.o: semester.cpp  semester.h
+	g++ -c $(CFLAGS) semester.cpp -o semester.o
 all: $(EXEC)
 
 $(EXEC): $(OBJS)
